@@ -1,0 +1,29 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+---
+
+<!DOCTYPE html>
+<html lang="es">
+  <BaseHead title="El Blog de TMCheiN" description="Lista de publicaciones" />
+  <body>
+    <div class="layout">
+      <Header />
+      <main>
+        <slot />
+      </main>
+    </div>
+    <style>
+      body {
+        margin: 0;
+        background-color: #fff;
+        width: 100%;
+      }
+
+      .layout {
+        max-width: 1280px;
+        margin: 0 auto;
+      }
+    </style>
+  </body>
+</html>

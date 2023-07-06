@@ -1,13 +1,39 @@
-<header>
-  <nav>
-    <a href="/">Inicio</a>
+---
+import clsx from "clsx";
+interface Props {
+  className?: string;
+}
+
+const { className } = Astro.props;
+const { pathname } = Astro.url;
+
+enum STYLES {
+  "/" = `text-pink-500 underline`,
+  "/about" = "text-blue-500 underline",
+}
+---
+
+<header class="my-14 flex justify-center">
+  <nav class={clsx(`max-w-sm w-full text-xl font-semibold`, className)}>
+    <ul class="m-0 p-0 flex gap-4">
+      <li>
+        <a
+          class={pathname === "/"
+            ? STYLES[pathname]
+            : "transition-colors duration-300 hover:text-purple-500"}
+          href="/">Inicio</a
+        >
+      </li>
+      <li>
+        <a
+          class={clsx(
+            pathname === "/about"
+              ? STYLES[pathname]
+              : "transition-colors duration-300 hover:text-purple-500"
+          )}
+          href="/about">Sobre mi</a
+        >
+      </li>
+    </ul>
   </nav>
 </header>
-<style>
-  header {
-    margin: 2em 4em 2em;
-  }
-  h2 {
-    margin: 0.5em 0;
-  }
-</style>

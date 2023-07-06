@@ -1,58 +1,23 @@
 ---
-import { Card } from "accessible-astro-components";
 import BlogLayout from "../layouts/BlogLayout.astro";
 const posts = await Astro.glob("../pages/post/**/*.mdx");
 ---
 
-<BlogLayout>
-  <section class="article-head">
-    <div class="container">
-      <ul>
-        {
-          posts.map((post) => (
-            <li>
-              <Card
-                url={"/post/" + post.frontmatter.slug}
-                img={post.frontmatter.image}
-                title={post.frontmatter.title}
-                footer={post.frontmatter.author}
-              >
-                {post.frontmatter.description}
-              </Card>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
+<BlogLayout description="Lista de publicaciones">
+  <section class="mt-14">
+    <ul class="flex flex-col gap-8">
+      {
+        posts.map((post) => (
+          <li>
+            <a class="group" href={"/post/" + post.frontmatter.slug}>
+              <h3 class="text-lg font-semibold group-hover:underline">
+                {post.frontmatter.title}
+              </h3>
+              <h4 class="text-gray-400 text-sm">{post.frontmatter.pubDate}</h4>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
   </section>
 </BlogLayout>
-<style>
-  ul {
-    padding: 0;
-    display: grid;
-    grid-gap: 2rem;
-    list-style-type: none;
-  }
-
-  @media only screen and (max-width: 600px) {
-    ul {
-      display: flex;
-      flex-direction: column;
-    }
-  }
-
-  /* Small devices (portrait tablets and large phones, 600px and up) */
-  @media only screen and (min-width: 600px) {
-    ul {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @media only screen and (min-width: 1200px) {
-    ul {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-</style>

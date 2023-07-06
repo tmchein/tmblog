@@ -12,43 +12,24 @@ const {
   <head>
     <BaseHead title={title} description={description} />
   </head>
-  <body>
-    <Header />
+  <body class="px-4 lg:px-0">
+    <Header className="max-w-4xl" />
     <main>
-      <article>
-        <header class="article-head">
-          <h1 class="title">{title}</h1>
+      <article
+        class="prose lg:prose-xl mx-auto prose-img:m-auto marker:text-purple-500 prose-a:text-purple-500"
+      >
+        <header>
+          <h1>{title}</h1>
           <em>Autor: {author}</em>
         </header>
-        <div class="article-body">
+        <section>
           {image && <img width={720} height={360} src={image} alt="" />}
-          Published on: {pubDate && <time>{pubDate}</time>}
+          <p>Fecha de publicación: {pubDate && <time>{pubDate}</time>}</p>
           <hr />
           <slot />
-        </div>
+        </section>
       </article>
     </main>
     <Footer />
-    <style>
-      main {
-        padding: 0 1.5rem;
-      }
-      body {
-        height: 100%;
-      }
-      time {
-        display: inline-block;
-        margin-top: 10px;
-      }
-
-      .title {
-        font-size: 2em;
-        margin: 0.25em 0 0;
-      }
-      hr {
-        border-top: 1px solid #ddd;
-        margin: 1rem 0;
-      }
-    </style>
   </body>
 </html>

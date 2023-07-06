@@ -1,0 +1,29 @@
+---
+import BlogLayout from "../layouts/BlogLayout.astro";
+
+const today = new Date();
+---
+
+<BlogLayout description="Sobre mi">
+  <section class="flex flex-col gap-4">
+    <div class="flex gap-8 items-center">
+      <img
+        src="/images/tmchein.jpeg"
+        alt="A picture of Juan Rojas face"
+        class="w-24 h-24 rounded"
+        width="96"
+        height="96"
+      />
+      <h2>Juan Rojas - {today.getFullYear() - 1998} años</h2>
+    </div>
+    <p>
+      Ingeniero de software con 3 años de experiencia en desarrollo de frontend.
+      Trabajé con equipos multiculturales utilizando herramientas como React.js
+      y Node.js para desarrollar y mantener soluciones de frontend. Un
+      desarrollador apasionado y colaborativo que se mantienen a la vanguardia
+      con el ecosistema de JavaScript, siempre dispuesto a aprender y mejorar
+      tanto habilidades técnicas como no técnicas, y siempre dispuesto a
+      compartir conocimientos significativos en los equipos.
+    </p>
+  </section>
+</BlogLayout>

@@ -1,29 +1,23 @@
 ---
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
+
+interface Props {
+  description: string;
+}
+
+const { description } = Astro.props;
 ---
 
 <!DOCTYPE html>
 <html lang="es">
-  <BaseHead title="El Blog de TMCheiN" description="Lista de publicaciones" />
-  <body>
-    <div class="layout">
+  <BaseHead title="El Blog de TMCheiN" description={description} />
+  <body class="px-4 lg:px-0">
+    <div>
       <Header />
-      <main>
+      <main class="max-w-sm w-full mx-auto">
         <slot />
       </main>
     </div>
-    <style>
-      body {
-        margin: 0;
-        background-color: #fff;
-        width: 100%;
-      }
-
-      .layout {
-        max-width: 1280px;
-        margin: 0 auto;
-      }
-    </style>
   </body>
 </html>

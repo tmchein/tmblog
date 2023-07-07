@@ -1,5 +1,6 @@
 ---
 import clsx from "clsx";
+import ThemeButton from "./ThemeButton.astro";
 interface Props {
   className?: string;
 }
@@ -8,19 +9,24 @@ const { className } = Astro.props;
 const { pathname } = Astro.url;
 
 enum STYLES {
-  "/" = `text-pink-500 underline`,
-  "/about" = "text-blue-500 underline",
+  "/" = `text-purple-500 underline dark:text-purple-200`,
+  "/about" = "text-purple-500 underline dark:text-purple-200",
 }
 ---
 
 <header class="my-14 flex justify-center">
-  <nav class={clsx(`max-w-sm w-full text-xl font-semibold`, className)}>
+  <nav
+    class={clsx(
+      `max-w-sm w-full text-xl font-semibold flex items-center justify-between`,
+      className
+    )}
+  >
     <ul class="m-0 p-0 flex gap-4">
       <li>
         <a
           class={pathname === "/"
             ? STYLES[pathname]
-            : "transition-colors duration-300 hover:text-purple-500"}
+            : "transition-colors duration-300 text-black dark:text-white hover:text-purple-500"}
           href="/">Inicio</a
         >
       </li>
@@ -29,11 +35,12 @@ enum STYLES {
           class={clsx(
             pathname === "/about"
               ? STYLES[pathname]
-              : "transition-colors duration-300 hover:text-purple-500"
+              : "transition-colors duration-300 text-black dark:text-white hover:text-purple-500"
           )}
           href="/about">Sobre mi</a
         >
       </li>
     </ul>
+    <ThemeButton />
   </nav>
 </header>

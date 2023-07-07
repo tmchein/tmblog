@@ -8,6 +8,8 @@ interface Props {
 const { className } = Astro.props;
 const { pathname } = Astro.url;
 
+console.log(pathname);
+
 enum STYLES {
   "/" = `text-purple-500 underline dark:text-purple-200`,
   "/about" = "text-purple-500 underline dark:text-purple-200",

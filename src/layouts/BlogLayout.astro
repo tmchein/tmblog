@@ -9,9 +9,10 @@ interface Props {
 const { description } = Astro.props;
 ---
 
-<!DOCTYPE html>
 <html lang="es">
-  <BaseHead title="El Blog de TMCheiN" description={description} />
+  <head>
+    <BaseHead title="El Blog de TMCheiN" description={description} />
+  </head>
   <body class="bg-white dark:bg-midnight px-4 lg:px-0">
     <div>
       <Header />

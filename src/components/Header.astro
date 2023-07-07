@@ -12,7 +12,7 @@ console.log(pathname);
 
 enum STYLES {
   "/" = `text-purple-500 underline dark:text-purple-200`,
-  "/about" = "text-purple-500 underline dark:text-purple-200",
+  "about" = "text-purple-500 underline dark:text-purple-200",
 }
 ---
 
@@ -35,7 +35,7 @@ enum STYLES {
       <li>
         <a
           class={clsx(
-            pathname === "/about"
+            pathname === "about"
               ? STYLES[pathname]
               : "transition-colors duration-300 text-black dark:text-white hover:text-purple-500"
           )}

@@ -1,5 +1,6 @@
 ---
 import BlogLayout from "../layouts/BlogLayout.astro";
+import { DateTime } from "luxon";
 const posts = await Astro.glob("../pages/post/**/*.mdx");
 ---
 
@@ -7,13 +8,14 @@ const posts = await Astro.glob("../pages/post/**/*.mdx");
   <section class="mt-14">
     <ul class="flex flex-col gap-8">
       {
-        posts.map((post) => (
+        posts.sort((a,b)=>(DateTime.fromISO(a.frontmatter.date) < DateTime.fromISO(b.frontmatter.date)) ? 1 : ((DateTime.fromISO(a.frontmatter.date) > DateTime.fromISO(b.frontmatter.date)) ? -1 : 0))
+        .map((post) => (
           <li>
             <a class="group" href={"/post/" + post.frontmatter.slug}>
               <h3 class="text-lg text-black dark:text-slate-100 font-semibold group-hover:underline">
                 {post.frontmatter.title}
               </h3>
-              <h4 class="text-gray-400 text-sm">{post.frontmatter.pubDate}</h4>
+              <h4 class="text-gray-400 text-sm">{DateTime.fromISO(post.frontmatter.date).toLocaleString(DateTime.DATE_FULL, { locale: 'es' })}</h4>
             </a>
           </li>
         ))

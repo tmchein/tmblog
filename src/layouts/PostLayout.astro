@@ -23,7 +23,7 @@ const {
           <em>Autor: {author}</em>
         </header>
         <section>
-          {image && <img width={720} height={360} src={image} alt="" />}
+          {image ? <img width={720} height={360} src={image} alt="" /> : null}
           <p>Fecha de publicación: {pubDate && <time>{pubDate}</time>}</p>
           <hr />
           <slot />

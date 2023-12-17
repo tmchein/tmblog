@@ -6,9 +6,8 @@ interface Props {
 }
 
 const { className } = Astro.props;
-const { pathname } = Astro.url;
+const { pathname } : {pathname:keyof typeof STYLES} = Astro.url;
 
-console.log(pathname);
 
 enum STYLES {
   "/" = `text-purple-500 underline dark:text-purple-200`,
@@ -26,9 +25,9 @@ enum STYLES {
     <ul class="m-0 p-0 flex gap-4">
       <li>
         <a
-          class={pathname === "/"
-            ? STYLES[pathname]
-            : "transition-colors duration-300 text-black dark:text-white hover:text-purple-500"}
+          class={clsx(pathname === "/"
+          ? STYLES[pathname]
+          : "transition-colors duration-300 text-black dark:text-white hover:text-purple-500")}
           href="/">Inicio</a
         >
       </li>

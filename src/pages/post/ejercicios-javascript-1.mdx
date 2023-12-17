@@ -1,0 +1,194 @@
+---
+layout: ../../layouts/PostLayout.astro
+title: 'Ejercicios con Javascript - encontrando instancias'
+description: 'Hablamos sobre como resolver un ejercicio de encontrar instancias, encontrado en LeetCode.'
+author: 'Juan Rojas'
+pubDate: '17 Diciembre, 2023'
+date: '2023-12-17'
+image: ''
+slug: 'ejercicios-javascript-1'
+tags: ['javascript']
+---
+
+Hace un tiempo pasandome por LeetCode encontré un ejercicio bastante curioso, era un ejercicio de
+JavaScript que trataba sobre encontrar si un objeto era instancia de una clase.
+
+El link del ejercicio es el siguiente:
+[LeetCode 2618](https://leetcode.com/problems/check-if-object-instance-of-class/)
+
+Su enunciado dice:
+
+"Escribe una función que verifique si un valor dado es una instancia de una clase o superclase dada. Para este problema, se considera que un objeto es una instancia de una clase dada si ese objeto tiene acceso a los métodos de esa clase.
+No hay restricciones en los tipos de datos que se pueden pasar a la función. Por ejemplo, el valor o la clase podrían estar indefinidos."
+
+```markdown
+### Ejemplo 1:
+
+Input: func = () => checkIfInstanceOf(new Date(), Date)
+Output: true
+Explicación:
+El objeto devuelto por el constructor de Date es, por definición, una instancia de Date.
+
+### Ejemplo 2:
+
+Input: func = () => { class Animal {}; class Dog extends Animal {}; return checkIfInstanceOf(new Dog(), Animal); }
+Output: true
+Explicación:
+class Animal {};
+class Dog extends Animal {};
+checkIfInstanceOf(new Dog(), Animal); // true
+
+Dog es una subclase de Animal. Por lo tanto, un objeto Dog es una instancia tanto de Dog como de Animal.
+
+### Ejemplo 3:
+
+Input: func = () => checkIfInstanceOf(Date, Date)
+Output: false
+Explicación:
+El objeto devuelto por el constructor de Date no puede lógicamente ser una instancia de sí mismo.
+
+### Ejemplo 4:
+
+Input: func = () => checkIfInstanceOf(5, Number)
+Output: true
+Explicación:
+5 es un Number. Ten en cuenta que la palabra clave "instanceof" devolvería falso.
+Sin embargo, aún se considera una instancia de Number porque accede a los métodos de Number. Por ejemplo, "toFixed()".
+```
+
+Se nos pide que escribamos una funcion que detecte que dado un parametro obj y un parametro classFunction, devolvamos
+si es true o false dependiendo de si es o no una instancia
+
+```js
+/**
+ * @param {*} obj
+ * @param {*} classFunction
+ * @return {boolean}
+ */
+var checkIfInstanceOf = function (obj, classFunction) {};
+
+/**
+ * checkIfInstanceOf(new Date(), Date); // true
+ */
+```
+
+## Solución
+
+Al leer el código pensé directamente en utilizar el instanceof ya que aquel operador me permitiría
+saber si un objeto es instancia de una clase. Haciendolo de esta manera me quedé impresionado al saber que mi solución
+no funcionaba, eso se debe a una razón y es que cuando ejecutamos el siguiente codigo su output no es el esperado:
+
+```js
+const n1 = 1;
+
+console.log(n1 instanceof Number); // ====> false
+```
+
+Cuando usamos variables sin hacer uso del objeto el operador instanceof nos devuelve false, así que debemos pensar
+en otra manera para que nuestro codigo pueda entender este caso. Para ello podemos hacer uso del prototipo.
+
+```js
+class Animal {
+  // Lo que sea que tu clase haga
+}
+
+class Tucan extends Animal {
+  // Imagina que esto hace algo
+}
+
+const tukiTuki = new Tucan();
+
+console.log(Object.getPrototypeOf(tukiTuki)); // ===> Tucan
+
+// Cadena de prototipos [null => objeto => Animal => Tucan]
+```
+
+Partiendo del anterior ejemplo podemos evidenciar que si Tucan extiende de animal entonces en su cadena de prototipos
+podemos ser capaces de encontrar el prototipo del objeto del que está extendiendo, de esta manera podemos dar solución a nuestro problema.
+
+Lo principal es por comenzar checkeando lo que se nos está enviando por parametros, recuerden
+que no estamos utilizando TypeScript, por lo cual nuestros parametros no son seguros y podemos
+enviar lo que sea.
+
+```js
+const checkIfInstanceOf = (obj, classFunction) => {
+  if (
+    typeof obj === undefined ||
+    typeof obj === null ||
+    typeof classFunction !== 'function'
+  ) {
+    return false;
+  }
+};
+```
+
+Si nuestro objeto es indefinido, nulo o nuestra classFunction no es una función deberemos devolver falso, esto es debido a que si
+las condiciones del enunciado no se cumplen no podremos operar ningun tipo de lógica.
+
+Una vez hecha la verificacion del input podemos empezar por la logica que mencionamos al inicio de este post, debemos checkear la cadena de prototipos. Recordemos que la cadena de prototipos va de la siguiente manera:
+
+<img
+  src="https://i.postimg.cc/TwXWLLmR/Screenshot-2023-12-17-at-00-32-47.png"
+  alt="Cadena de prototipos"
+/>
+
+Para lograr escalar sobre la cadena de prototipos debemos usar el siguiente metodo de los objetos:
+
+```js
+Object.getPrototypeOf();
+```
+
+Esto nos devolvera el prototipo del objeto que necesitamos pero si lo anidamos repetidas veces podremos llegar hasta null.
+
+```js
+Object.getPrototypeOf(Object.getPrototypeOf(...))
+```
+
+Entonces haremos un while y su condicion será que mientras el prototipo actual no sea nulo sigamos buscando prototipos.
+
+```js
+const checkIfInstanceOf = (obj, classFunction) => {
+  if (
+    typeof obj === undefined ||
+    typeof obj === null ||
+    typeof classFunction !== 'function'
+  ) {
+    return false;
+  }
+
+  let currentPrototype = Object.getPrototypeOf(obj);
+
+  while (currentPrototype !== null) {
+    // ...
+  }
+};
+```
+
+Si nuestro prototipo es igual al prototipo de classFunction que pasamos por inputs, entonces debemos salir del bucle puesto que ya sabriamos que el objeto es una instancia de classFunction.
+Si el prototipo no es igual al prototipo de classFunction entonces debemos decir que currentPrototype es igual a Object.getPrototypeOf(currentPrototype)
+
+```js
+const checkIfInstanceOf = (obj, classFunction) => {
+  if (
+    typeof obj === undefined ||
+    typeof obj === null ||
+    typeof classFunction !== 'function'
+  ) {
+    return false;
+  }
+
+  let currentPrototype = Object.getPrototypeOf(obj);
+
+  while (currentPrototype !== null) {
+    if (currentPrototype === classFunction.prototype) {
+      return true;
+    }
+    currentPrototype = Object.getPrototypeOf(currentPrototype);
+  }
+};
+```
+
+Y así concluimos con este ejercicio, me parece un ejercicio bastante entretenido e interesante porque con el aprendí bastantes cosas tales como la cadena de prototipos y que instanceof no funciona para todos los casos, también la forma en la que podemos recorrer la cadena de prototipos utilizando getPrototypeOf.
+Espero que al igual que yo ustedes hayan aprendido y entendido que hacer ante este tipo de situaciones.
+
+Sigamos aprendiendo juntos.

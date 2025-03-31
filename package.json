@@ -31,7 +31,6 @@
     "eslint-plugin-n": "^17.17.0",
     "eslint-plugin-promise": "^7.2.1",
     "eslint-plugin-react": "^7.37.4",
-    "npkill": "0.12.2",
     "typescript": "^5.8.2"
   }
 }

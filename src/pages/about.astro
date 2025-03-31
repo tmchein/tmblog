@@ -1,29 +1,38 @@
 ---
+import { DateTime } from "luxon";
 import BlogLayout from "../layouts/BlogLayout.astro";
 
-const today = new Date();
+const today = DateTime.now()
+
+const firstDayOfWork = DateTime.fromISO('2021-01-27');
+
+const yearsOfExperience = Math.round(today.diff(firstDayOfWork, 'years').toObject().years!);
+
 ---
 
 <BlogLayout description="Sobre mi">
-  <section class="flex flex-col gap-4 text-black dark:text-slate-200">
-    <div class="flex gap-8 items-center">
+  <article class="max-w-sm flex flex-col mx-auto gap-4 text-black dark:text-slate-200">
+    <section class="flex gap-8 items-center">
       <img
         src="/images/tmchein.jpeg"
-        alt="A picture of Juan Rojas face"
-        class="w-24 h-24 rounded"
-        width="96"
-        height="96"
+        alt="Una foto de Juan Rojas"
+        class="w-32 h-32 rounded"
+        width="128"
+        height="128"
       />
-      <h2>Juan Rojas - Frontend developer</h2>
-    </div>
+      <section>
+        <h2>Juan Rojas - Frontend developer</h2>
+        <strong>Trabajando en Qventus</strong>
+      </section>
+    </section>
     <p>
-      Ingeniero de software con 3 años de experiencia en desarrollo de frontend.
-      Trabajé con equipos multiculturales utilizando herramientas como React.js
+      Ingeniero de software con {yearsOfExperience} años de experiencia en desarrollo de frontend.
+      Trabajo con equipos multiculturales utilizando herramientas como React.js
       y Node.js para desarrollar y mantener soluciones de frontend. Un
       desarrollador apasionado y colaborativo que se mantienen a la vanguardia
       con el ecosistema de JavaScript, siempre dispuesto a aprender y mejorar
       tanto habilidades técnicas como no técnicas, y siempre dispuesto a
       compartir conocimientos significativos en los equipos.
     </p>
-  </section>
+  </article>
 </BlogLayout>

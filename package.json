@@ -7,27 +7,31 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "reinstall": "npx npkill -D && build",
+    "new-post": "node --experimental-strip-types ./scripts/createPost.ts"
   },
   "dependencies": {
-    "@astrojs/mdx": "0.19.7",
-    "@astrojs/tailwind": "4.0.0",
-    "astro": "2.8.0",
-    "clsx": "1.2.1",
-    "luxon": "^3.4.4",
-    "tailwindcss": "3.3.2"
+    "@astrojs/mdx": "4.2.3",
+    "@astrojs/tailwind": "6.0.2",
+    "@tailwindcss/vite": "^4.0.17",
+    "astro": "5.5.6",
+    "clsx": "2.1.1",
+    "luxon": "^3.6.0",
+    "tailwindcss": "4.0.17"
   },
   "devDependencies": {
-    "@tailwindcss/typography": "^0.5.9",
-    "@types/luxon": "^3.3.7",
-    "@typescript-eslint/eslint-plugin": "^6.14.0",
-    "eslint": "^8.56.0",
-    "eslint-config-standard-with-typescript": "^43.0.0",
-    "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-mdx": "^3.0.0",
-    "eslint-plugin-n": "^16.4.0",
-    "eslint-plugin-promise": "^6.1.1",
-    "eslint-plugin-react": "^7.33.2",
-    "typescript": "^5.3.3"
+    "@tailwindcss/typography": "^0.5.16",
+    "@types/luxon": "^3.4.2",
+    "@typescript-eslint/eslint-plugin": "^8.28.0",
+    "eslint": "^9.23.0",
+    "eslint-config-standard-with-typescript": "^43.0.1",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-mdx": "^3.3.1",
+    "eslint-plugin-n": "^17.17.0",
+    "eslint-plugin-promise": "^7.2.1",
+    "eslint-plugin-react": "^7.37.4",
+    "npkill": "0.12.2",
+    "typescript": "^5.8.2"
   }
 }

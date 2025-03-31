@@ -1,18 +1,21 @@
 ---
 import clsx from "clsx";
 import ThemeButton from "./ThemeButton.astro";
+import { deviffyRoute } from "../utils/deviffy/deviffyRoutes";
 interface Props {
   className?: string;
 }
 
 const { className } = Astro.props;
-const { pathname } : {pathname:keyof typeof STYLES} = Astro.url;
+const { pathname } = Astro.url;
 
+const deviffiedAbout = deviffyRoute("/about/")
 
-enum STYLES {
-  "/" = `text-purple-500 underline dark:text-purple-200`,
-  "/about/" = "text-purple-500 underline dark:text-purple-200",
-}
+const STYLES = {
+  "/" : `text-purple-500 underline dark:text-purple-200`,
+  [deviffiedAbout] : "text-purple-500 underline dark:text-purple-200",
+} as const
+
 ---
 
 <header class="my-14 flex justify-center">
@@ -34,7 +37,7 @@ enum STYLES {
       <li>
         <a
           class={clsx(
-            pathname === "/about/"
+            pathname === deviffiedAbout
               ? STYLES[pathname]
               : "transition-colors duration-300 text-black dark:text-white hover:text-purple-500"
           )}

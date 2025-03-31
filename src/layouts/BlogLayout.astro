@@ -1,6 +1,8 @@
 ---
+import "../styles/global.css";
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
+
 
 interface Props {
   description: string;
@@ -13,12 +15,10 @@ const { description } = Astro.props;
   <head>
     <BaseHead title="El Blog de TMCheiN" description={description} />
   </head>
-  <body class="bg-white dark:bg-midnight px-4 lg:px-0">
-    <div>
+  <body class="font-[Atkinson] bg-white dark:bg-[var(--color-midnight)] px-4 lg:px-0">
       <Header />
-      <main class="max-w-sm w-full mx-auto">
+      <main class="max-w-sm lg:max-w-6xl w-full mx-auto">
         <slot />
       </main>
-    </div>
   </body>
 </html>

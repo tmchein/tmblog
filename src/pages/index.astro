@@ -1,18 +1,23 @@
 ---
+import type { MDXInstance } from "astro";
 import BlogLayout from "../layouts/BlogLayout.astro";
 import { DateTime } from "luxon";
-const posts = await Astro.glob("../pages/post/**/*.mdx");
+
+const posts: MDXInstance<Record<string, any>>[] = Object.values(import.meta.glob('../pages/post/**/*.mdx', { eager: true }));
+
 ---
 
 <BlogLayout description="Lista de publicaciones">
   <section class="mt-14">
-    <ul class="flex flex-col gap-8">
+    <ul class="flex flex-col lg:flex-row gap-8 pb-8">
       {
         posts.sort((a,b)=>(DateTime.fromISO(a.frontmatter.date) < DateTime.fromISO(b.frontmatter.date)) ? 1 : ((DateTime.fromISO(a.frontmatter.date) > DateTime.fromISO(b.frontmatter.date)) ? -1 : 0))
         .map((post) => (
           <li>
             <a class="group" href={"/post/" + post.frontmatter.slug}>
-              <h3 class="text-lg text-black dark:text-slate-100 font-semibold group-hover:underline">
+              <img src={post.frontmatter.image} alt={`imagen de introducción a la publicación llamada ${post.frontmatter.title}`} 
+              class='rounded-lg border-2 border-white dark:border-2 dark:border-gray-700'/>
+              <h3 class="text-2xl text-black dark:text-slate-100 font-semibold group-hover:underline">
                 {post.frontmatter.title}
               </h3>
               <h4 class="text-gray-400 text-sm">{DateTime.fromISO(post.frontmatter.date).toLocaleString(DateTime.DATE_FULL, { locale: 'es' })}</h4>
